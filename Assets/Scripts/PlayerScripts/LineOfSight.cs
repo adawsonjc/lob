@@ -1,0 +1,73 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class LineOfSight : MonoBehaviour
+{
+
+	public Transform player;
+	private int layerMask;
+	private LineRenderer lineRenderer;
+	private bool lineOfSightActive = true;
+	private RaycastHit2D lineOfSightTarget;
+	private bool hitSomething = false;
+							
+	//TODO
+	//Line is glitchy, need to add coroutine to slow down its draw rate
+	//notes: this will work really well with a controller.
+		
+	void Start ()
+	{
+		//Set the ray to ignore the anything in the "Player" layer.
+		layerMask = 1 << LayerMask.NameToLayer ("Player");
+		layerMask = ~layerMask;
+
+		lineRenderer = GetComponent<LineRenderer> ();
+		lineRenderer.SetWidth (.03f, .03f);
+	}
+
+	void Update ()
+	{
+
+		//For turning line of sight off and on
+		if (Input.GetButtonDown ("Fire2")) {
+			lineRenderer.SetPosition (0, Vector3.zero);
+			lineRenderer.SetPosition (1, Vector3.zero);
+			lineOfSightActive = !lineOfSightActive;
+		}
+
+		//Debug.Log (playerFacing.transform.position);
+		Vector2 direction = transform.position - player.position;
+
+		if (lineOfSightActive) {
+			RaycastHit2D hit = Physics2D.Raycast (player.position, direction, 2f, layerMask);
+			if (hit) {
+				hitSomething = true;
+				lineOfSightTarget = hit;
+				lineRenderer.SetPosition (0, new Vector3 (player.position.x, player.position.y, -1));
+				lineRenderer.SetPosition (1, new Vector3 (hit.point.x, hit.point.y, -1));
+			} else {
+				hitSomething = false;
+				lineRenderer.SetPosition (0, new Vector3 (player.position.x, player.position.y, -1));
+				lineRenderer.SetPosition (1, transform.position);
+			}
+
+		}
+	}
+
+	public RaycastHit2D getLineOfSightTarget ()
+	{
+		return lineOfSightTarget;
+	}
+
+	public bool getLineOfSightActive ()
+	{
+		return lineOfSightActive;
+	}
+		
+	public bool hasHitSomething ()
+	{
+		return hitSomething;
+	}
+
+}
+
