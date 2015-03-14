@@ -118,6 +118,7 @@
      <Compile Include="Assets\Scripts\TileGrid\Grid.cs" />
      <Compile Include="Assets\Scripts\TileGrid\GridWindow.cs" />
      <Compile Include="Assets\Scripts\TileGrid\TileSet.cs" />
+     <Compile Include="Assets\Scripts\TitleScreenScript.cs" />
      <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh2.shader" />
      <None Include="Assets\AstarPathfindingProject\Plugins\DotNetZip\License.txt" />
      <None Include="Assets\AstarPathfindingProject\Plugins\dependencies.txt" />

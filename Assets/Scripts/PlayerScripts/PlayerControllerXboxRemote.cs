@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerControllerXboxRemote : MonoBehaviour {
-
+public class PlayerControllerXboxRemote : MonoBehaviour
+{
+	
 	public float moveSpeed;
 	public float turnSpeed;
 
 	private Vector2 facing;
-	private bool rotating=false;
+	private bool rotating = false;
 
-	void Update () {
+	//TODO
+	//BIG ROTATIONS HAVE TO BE FASTER
+
+	void Update ()
+	{
 		movement ();
 		rotation ();
 	}
@@ -20,12 +25,14 @@ public class PlayerControllerXboxRemote : MonoBehaviour {
 		float rotateVertical = Input.GetAxis ("RightJoystickVertical");
 
 		if (Mathf.Abs (rotateHorizontal) > 0.2 || Mathf.Abs (rotateVertical) > 0.2) {
-			rotating=true;
+			rotating = true;
 			facing = new Vector2 (rotateHorizontal, rotateVertical);
+			//transform.rotation = Quaternion.LookRotation (Vector3.forward, facing);
 			float targetAngle = Mathf.Atan2 (facing.y, facing.x) * Mathf.Rad2Deg;
-			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, targetAngle), turnSpeed * Time.deltaTime);
+			//transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, targetAngle), turnSpeed * Time.deltaTime);
+			transform.rotation = Quaternion.AngleAxis (targetAngle, Vector3.forward);
 		} else {
-			rotating=false;
+			rotating = false;
 		}
 	}
 
@@ -38,15 +45,16 @@ public class PlayerControllerXboxRemote : MonoBehaviour {
 		rigidbody2D.velocity = movement * moveSpeed;
 
 		//Look in the direction the player is moving.
-		if(!rotating){
-			if (Mathf.Abs (movement.x) > 0.5 || Mathf.Abs (movement.y) > 0.5) {
-				float targetAngle = Mathf.Atan2 (movement.y, movement.x) * Mathf.Rad2Deg;
-				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, targetAngle), turnSpeed * Time.deltaTime);
-			}
-		}
+//		if (!rotating) {
+//			if (Mathf.Abs (movement.x) > 0.5 || Mathf.Abs (movement.y) > 0.5) {
+//				float targetAngle = Mathf.Atan2 (movement.y, movement.x) * Mathf.Rad2Deg;
+//				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, targetAngle), turnSpeed * Time.deltaTime);
+//			}
+//		}
 	}
 	
-	public void dies(){
+	public void dies ()
+	{
 		Debug.Log ("Player Dies");
 	}
 	

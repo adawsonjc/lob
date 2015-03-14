@@ -124,8 +124,8 @@ TextureImporter:
         y: 224
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      alignment: 9
+      pivot: {x: .337499976, y: .490624905}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Spritesheet1_2
       rect:
