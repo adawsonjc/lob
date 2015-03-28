@@ -22,7 +22,7 @@ public class LineOfSight : MonoBehaviour
 		layerMask = ~layerMask;
 
 		lineRenderer = GetComponent<LineRenderer> ();
-		lineRenderer.SetWidth (.03f, .03f);
+		lineRenderer.SetWidth (.05f, .05f);
 	}
 
 	void Update ()
@@ -35,11 +35,10 @@ public class LineOfSight : MonoBehaviour
 			lineOfSightActive = !lineOfSightActive;
 		}
 
-		//Debug.Log (playerFacing.transform.position);
 		Vector2 direction = transform.position - player.position;
 
 		if (lineOfSightActive) {
-			RaycastHit2D hit = Physics2D.Raycast (player.position, direction, 2f, layerMask);
+			RaycastHit2D hit = Physics2D.Raycast (player.position, direction, 5f, layerMask);
 			if (hit) {
 				hitSomething = true;
 				lineOfSightTarget = hit;

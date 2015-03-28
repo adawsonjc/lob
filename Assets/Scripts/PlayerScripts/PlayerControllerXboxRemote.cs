@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerControllerXboxRemote : MonoBehaviour
 {
-	
 	public float moveSpeed;
 	public float turnSpeed;
 

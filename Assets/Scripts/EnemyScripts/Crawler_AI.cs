@@ -3,7 +3,7 @@ using System.Collections;
 using Pathfinding;
 using System.Collections.Generic;
 
-public class Creeper_AI : MonoBehaviour
+public class Crawler_AI : MonoBehaviour
 {
 	public Transform target;
 	private Seeker seeker;
@@ -22,7 +22,7 @@ public class Creeper_AI : MonoBehaviour
 
 		path = new Vector3[0];
 		seeker = GetComponent<Seeker> ();
-		lineOfSight = target.FindChild ("LineOfSight").GetComponent<LineOfSight> ();
+		lineOfSight = target.FindChild ("LOS").GetComponent<LineOfSight> ();
 		StartCoroutine (seekPath ());
 	}
 	
@@ -30,12 +30,12 @@ public class Creeper_AI : MonoBehaviour
 	{
 		if (lineOfSight.hasHitSomething ()) {
 			RaycastHit2D hit = lineOfSight.getLineOfSightTarget ();
-			if (hit.transform.gameObject.tag == "Creeper" && hit.transform.gameObject.GetComponent<Creeper_AI> ().getId () == id) {
+			if (hit.transform.gameObject.tag == "Creeper" && hit.transform.gameObject.GetComponent<Crawler_AI> ().getId () == id) {
 			} else {
-				transform.position = Spline.MoveOnPath (path, transform.position, ref t, 1, 10, EasingType.Linear, false, false);
+				transform.position = Spline.MoveOnPath (path, transform.position, ref t, 4, 100, EasingType.Cubic, false, false);
 			}
 		} else {
-			transform.position = Spline.MoveOnPath (path, transform.position, ref t, 1, 10, EasingType.Linear, false, false);
+			transform.position = Spline.MoveOnPath (path, transform.position, ref t, 4, 100, EasingType.Cubic, false, false);
 		}
 	
 	}
@@ -44,7 +44,7 @@ public class Creeper_AI : MonoBehaviour
 	{
 		while (true) {
 			seeker.StartPath (transform.position, target.transform.position, OnPathComplete);
-			yield return new WaitForSeconds (0.2f);
+			yield return new WaitForSeconds (0.3f);
 		}	
 	}
 
