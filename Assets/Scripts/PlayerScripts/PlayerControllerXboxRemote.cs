@@ -9,9 +9,6 @@ public class PlayerControllerXboxRemote : MonoBehaviour
 	private Vector2 facing;
 	private bool rotating = false;
 
-	//TODO
-	//BIG ROTATIONS HAVE TO BE FASTER
-
 	void Update ()
 	{
 		movement ();
@@ -26,9 +23,7 @@ public class PlayerControllerXboxRemote : MonoBehaviour
 		if (Mathf.Abs (rotateHorizontal) > 0.2 || Mathf.Abs (rotateVertical) > 0.2) {
 			rotating = true;
 			facing = new Vector2 (rotateHorizontal, rotateVertical);
-			//transform.rotation = Quaternion.LookRotation (Vector3.forward, facing);
 			float targetAngle = Mathf.Atan2 (facing.y, facing.x) * Mathf.Rad2Deg;
-			//transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, targetAngle), turnSpeed * Time.deltaTime);
 			transform.rotation = Quaternion.AngleAxis (targetAngle, Vector3.forward);
 		} else {
 			rotating = false;
@@ -42,14 +37,6 @@ public class PlayerControllerXboxRemote : MonoBehaviour
 
 		Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
 		rigidbody2D.velocity = movement * moveSpeed;
-
-		//Look in the direction the player is moving.
-//		if (!rotating) {
-//			if (Mathf.Abs (movement.x) > 0.5 || Mathf.Abs (movement.y) > 0.5) {
-//				float targetAngle = Mathf.Atan2 (movement.y, movement.x) * Mathf.Rad2Deg;
-//				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, targetAngle), turnSpeed * Time.deltaTime);
-//			}
-//		}
 	}
 	
 	public void dies ()

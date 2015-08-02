@@ -26,9 +26,8 @@ public class Ghost_AI : MonoBehaviour
 	void OnCollisionEnter2D (Collision2D collision)
 	{
 		if (collision.gameObject.tag == "Player") {
-			target.GetComponent<PlayerControllerXboxRemote> ().dies ();
+			target.GetComponent<PlayerControllerKeyboard> ().dies ();
 			this.gameObject.SetActive (false);
-			//Destroy(this.gameObject);
 		}
 	}
 
@@ -56,7 +55,11 @@ public class Ghost_AI : MonoBehaviour
 
 		}
 
-		//Debug.Log ("Yay, we got a path back. Did it have an error? "+p.error);
+		//face the right direction
+		Vector3 dir = (target.transform.position - transform.position).normalized;
+		float targetAngle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
+		transform.rotation = Quaternion.AngleAxis (targetAngle, Vector3.forward);
+
 	}
 
 

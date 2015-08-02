@@ -3,20 +3,18 @@ using System.Collections;
 
 public class LineOfSight : MonoBehaviour
 {
-
+	public Texture2D cursorTexture;
 	public Transform player;
 	private int layerMask;
 	private LineRenderer lineRenderer;
 	private bool lineOfSightActive = true;
 	private RaycastHit2D lineOfSightTarget;
 	private bool hitSomething = false;
-							
-	//TODO
-	//Line is glitchy, need to add coroutine to slow down its draw rate
-	//notes: this will work really well with a controller.
-		
+								
 	void Start ()
 	{
+		Cursor.SetCursor (cursorTexture, new Vector2 (16, 16), CursorMode.Auto);
+
 		//Set the ray to ignore the anything in the "Player" layer.
 		layerMask = 1 << LayerMask.NameToLayer ("Player");
 		layerMask = ~layerMask;
