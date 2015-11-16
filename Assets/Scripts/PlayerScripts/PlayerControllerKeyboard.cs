@@ -7,6 +7,7 @@ public class PlayerControllerKeyboard : MonoBehaviour
 	public float turnSpeed;
 	private Animator animator;
 	public BlinkController blinkController;
+	private bool isAlive = true;
 
 	void Start ()
 	{
@@ -15,19 +16,30 @@ public class PlayerControllerKeyboard : MonoBehaviour
 
 	void Update ()
 	{
-		checkIfBlinks ();
-		movement ();
-		rotation ();
+		if (isAlive) {
+			checkIfBlinks ();
+			movement ();
+			rotation ();
+		}
 		if (Mathf.Abs (rigidbody2D.velocity.x) > 0.2 || Mathf.Abs (rigidbody2D.velocity.y) > 0.2) {
 			animator.SetFloat ("Speed", 1f);
 		} else {
 			animator.SetFloat ("Speed", 0f);
 		}
+
 	}
 
 	public void dies ()
 	{
 		Debug.Log ("Player Dies");
+		GameObject.Find ("GameOverMenu").GetComponent<Animator> ().SetBool ("IsOpen", true);
+		isAlive = false;
+		reset ();
+	}
+
+	void reset ()
+	{
+		rigidbody2D.velocity = Vector2.zero;
 	}
 
 	void checkIfBlinks ()

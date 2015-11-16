@@ -3,9 +3,6 @@ using System.Collections;
 
 public class BlinkController : MonoBehaviour
 {
-	//TODO
-	//OnPause of the game, the ellapsed Time will need to be taken out and passed back into the coroutine,
-	//the coroutine will then use this parameter to activate a shorter blink than usual on resume.
 
 	private float startTime;
 	private float rememberEllapsedTime;
@@ -41,6 +38,9 @@ public class BlinkController : MonoBehaviour
 		moveAllGhosts ();
 		yield return new WaitForSeconds (blinkDuration);
 		blinkScreen.SetActive (false);
+
+		//Create a new instance of the blinkCountdownIEnumerator and start it
+		blinkCountdownIEnumerator = blinkCountdown ();
 		StartCoroutine (blinkCountdownIEnumerator);
 	}
 

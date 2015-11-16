@@ -13,7 +13,6 @@ public class Ghost_AI : MonoBehaviour
 
 	public void Start ()
 	{
-		//Get a reference to the Seeker component we added earlier
 		seeker = GetComponent<Seeker> ();
 	}
 
